@@ -8,7 +8,7 @@ export const fetchMovies = async (payload: FetchMoviesRequestPayload) => {
     const response = await axios.get<Movies>(`https://www.omdbapi.com/?s=${movie}&apikey=${process.env.REACT_APP_KEY}&y=${year}&page=${page}`);
     return response;
   } catch(err: any) {
-    return [];
+    return err;
   }
 }
 
@@ -19,6 +19,6 @@ export const fetchMovieDetails = async (id: any) => {
     return response;
 
   } catch(err: any) {
-    return [];
+    return err;
   }
 }

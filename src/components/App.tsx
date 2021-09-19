@@ -1,4 +1,3 @@
-import '../App.css';
 import { Movies } from './Movies';
 import {
   BrowserRouter as Router,
@@ -17,8 +16,8 @@ function App() {
         <Navigation />
         <Switch>
           <Route exact path='/' component={Movies} />
-          <Route path='/movies/:id' component={MovieDetailsComponent} />
-          <Route path='/rated_movies' component={RatedMovies} />
+          <Route exact path='/movies/:id' component={MovieDetailsComponent} />
+          <Route exact path='/rated_movies' component={RatedMovies} />
         </Switch>
       </Router>
     </div>
