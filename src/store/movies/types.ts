@@ -1,7 +1,11 @@
 import {
     RECEIVE_MOVIES_REQUEST,
     RECEIVE_MOVIES_SUCCESS,
-    RECEIVE_MOVIES_ERROR
+    RECEIVE_MOVIES_ERROR,
+    CHANGE_MOVIE_TITLE_REQUEST,
+    CHANGE_MOVIE_YEAR_REQUEST,
+    CHANGE_MOVIE_YEAR_SUCCESS,
+    CHANGE_MOVIE_TITLE_SUCCESS
 } from "./actionTypes";
 
 export interface Movies {
@@ -24,6 +28,8 @@ export interface MoviesState {
     movies: Movie[];
     errorMessage: string | null;
     totalResult: string;
+    movieTitleValue: string;
+    movieYearValue: string;
 }
 
 export interface FetchMoviesRequestPayload {
@@ -55,7 +61,39 @@ export type FetchMoviesFailure = {
     payload: FetchMoviesFailurePayload;
 }
 
+export interface ChangeMovieTitlePayload {
+    value: string;
+}
+
+export type ChangeMovieTitleRequest = {
+    type: typeof CHANGE_MOVIE_TITLE_REQUEST,
+    payload: ChangeMovieTitlePayload
+}
+
+export type ChangeMovieTitleSuccess = {
+    type: typeof CHANGE_MOVIE_TITLE_SUCCESS,
+    payload: ChangeMovieTitlePayload
+}
+
+export interface ChangeMovieYearPayload {
+    value: string;
+}
+
+export type ChangeMovieYearRequest = {
+    type: typeof CHANGE_MOVIE_YEAR_REQUEST,
+    payload: ChangeMovieYearPayload
+}
+
+export type ChangeMovieYearSuccess = {
+    type: typeof CHANGE_MOVIE_YEAR_SUCCESS,
+    payload: ChangeMovieYearPayload
+}
+
 export type MoviesActions =
     | FetchMoviesRequest
     | FetchMoviesSuccess
-    | FetchMoviesFailure;
+    | FetchMoviesFailure
+    | ChangeMovieYearRequest
+    | ChangeMovieYearSuccess
+    | ChangeMovieTitleRequest
+    | ChangeMovieTitleSuccess;

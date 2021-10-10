@@ -53,12 +53,7 @@ export const RatedMovies = () => {
     if (ratedMovies.length !== 0) {
       const getFilters = ratedMovies.map(item => item.Genre.split(', ')).flat();
 
-      const getNotDuplicateFilters = getFilters.reduce<string[]>((acc, curr) => {
-        if (acc.includes(curr)) {
-            return acc;
-        }
-        return [...acc, curr];
-      }, []);
+      const getNotDuplicateFilters = Array.from(new Set(getFilters));
 
       setFilters(getNotDuplicateFilters);
     }
@@ -71,15 +66,15 @@ export const RatedMovies = () => {
   const handleClose = () => {
     setOpen(false);
 
-    const filteredData = ratedMoviesData.reduce((acc: MovieDetails[], curr: MovieDetails) => {
-      if (selectedFilters.filter((filter: string) => curr.Genre.includes(filter)).length === 0) {
+    const filteredData = ratedMovies.reduce((acc: MovieDetails[], curr: MovieDetails) => {
+      if (!selectedFilters.some((filter: string) => curr.Genre.includes(filter))) {
         return acc;
       }
     
       return [...acc, curr];
     }, []);
 
-    setRatedMoviesData(filteredData);
+    setRatedMoviesData(() => selectedFilters.length === 0 ? ratedMovies : filteredData);
   };
 
   const handleChangeFilter = (event: ChangeEvent<HTMLInputElement>) => {

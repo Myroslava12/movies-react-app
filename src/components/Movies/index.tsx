@@ -1,9 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import { Box, Container, Divider, List, makeStyles, Typography } from '@material-ui/core';
 import { Alert, Pagination } from '@material-ui/lab';
-import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMoviesRequest } from '../../store/movies/actions';
-import { getErrorMessage, getLoader, getMovies, getTotalResult } from '../../store/movies/selectors';
+import { getErrorMessage, getLoader, getMovies, getMovieTitleValue, getMovieYearValue, getTotalResult } from '../../store/movies/selectors';
 import { getRatingErrorMessage, getRatingLoader } from '../../store/ratedMovies/selectors';
 import { Loader } from '../Loader';
 import { SearchBox } from '../SearchBox';
@@ -38,15 +38,17 @@ export const Movies = () => {
   const errorMessage = useSelector(getErrorMessage);
   const totalResult = useSelector(getTotalResult);
   const ratingErrorMessage = useSelector(getRatingErrorMessage);
+  const movieTitleValue = useSelector(getMovieTitleValue);
+  const moiveYearValue = useSelector(getMovieYearValue);
 
-  const [movieTitleValue, setMovieTitleValue] = useState('');
-  const [year, setYear] = useState('');
+  const [movieTitle, setMovieTitle] = useState(movieTitleValue);
+  const [movieYear, setMovieYear] = useState(moiveYearValue);
   const [page, setPage] = useState(1);
   const [noOfPages, setNoOfPages] = useState(0);
 
-  const handleChange = (_: any, value: any) => {
+  const handleChange = (_: any, value: number) => {
     setPage(value);
-    dispatch(fetchMoviesRequest({ movie: movieTitleValue, year, page: value }));
+    dispatch(fetchMoviesRequest({ movie: movieTitle, year: movieYear, page: value }));
   };
 
   useEffect(() => {
@@ -61,10 +63,10 @@ export const Movies = () => {
       <Typography variant='h2' className={classes.title} component='h2' gutterBottom>Movies</Typography>
 
       <SearchBox
-        movieTitleValue={movieTitleValue}
-        setMovieTitleValue={setMovieTitleValue}
-        year={year}
-        setYear={setYear}
+        movieTitle={movieTitle}
+        setMovieTitle={setMovieTitle}
+        movieYear={movieYear}
+        setMovieYear={setMovieYear}
         setPage={setPage}
       />
 

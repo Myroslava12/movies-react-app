@@ -18,7 +18,7 @@ export interface MovieDetails {
   BoxOffice: string;
   Production: string;
   Response: string;
-  imdbID?: string;
+  imdbID: string;
 }
 
 export interface MovieDetailsState {

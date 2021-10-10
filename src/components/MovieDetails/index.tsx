@@ -17,6 +17,7 @@ import { MovieDetails } from '../../store/movieDetails/types';
 import { Rate } from '../Rate';
 import { getRatingErrorMessage, getRatingLoader } from '../../store/ratedMovies/selectors';
 import { Alert } from '@material-ui/lab';
+import { ListItem } from './ListItem';
 
 interface ParamsData {
     id: string;
@@ -132,14 +133,5 @@ export const MovieDetailsComponent = () => {
           </Box>
         </Box>)}
     </Container>
-  );
-};
-
-
-const ListItem = ({ item, classes }: any) => {
-  if (typeof item.value !== 'string' || item.key === 'Poster') return <></>; 
-
-  return (
-    <ListItemText className={classes.listItem} primary={item.value} secondary={item.key} />
   );
 };

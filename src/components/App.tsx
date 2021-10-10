@@ -7,6 +7,7 @@ import {
 import { Navigation } from './Navigation';
 import { MovieDetailsComponent } from './MovieDetails';
 import { RatedMovies } from './RatedMovies';
+import { NotFound } from './NotFound';
 
 function App() {
 
@@ -16,8 +17,9 @@ function App() {
         <Navigation />
         <Switch>
           <Route exact path='/' component={Movies} />
-          <Route exact path='/movies/:id' component={MovieDetailsComponent} />
-          <Route exact path='/rated_movies' component={RatedMovies} />
+          <Route path='/movies/:id' component={MovieDetailsComponent} />
+          <Route path='/rated_movies' component={RatedMovies} />
+          <Route component={NotFound} />
         </Switch>
       </Router>
     </div>

@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, makeStyles, TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { fetchMoviesRequest } from '../../store/movies/actions';
+import { fetchMoviesRequest, changeMovieTitleRequest, changeMovieYearRequest } from '../../store/movies/actions';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,31 +18,45 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const SearchBox = (props: any) => {
-  const { movieTitleValue, setMovieTitleValue, year, setYear, setPage } = props;
+interface PropsData {
+  movieTitle: string;
+  setMovieTitle: (value: string) => void;
+  movieYear: string;
+  setMovieYear: (value: string) => void;
+  setPage: (value: number) => void;
+}
+
+export const SearchBox = (props: PropsData) => {
+  const { movieTitle, setMovieTitle, movieYear, setMovieYear, setPage } = props;
   const dispatch = useDispatch();
   const classes = useStyles();
   const [isError, setIsError] = useState(false);
 
   const onChangeMovieTitleValue = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setMovieTitleValue(value);
+    setMovieTitle(value);
   }
 
   const onChangeYear = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setYear(value);
+    setMovieYear(value);
   }
 
-  const onSubmit = () => {
-    if (movieTitleValue.length === 0) {
+  const onSubmit = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (movieTitle.length === 0) {
         setIsError(true);
         return;
     }
 
     setIsError(false);
     setPage(1);
-    dispatch(fetchMoviesRequest({ movie: movieTitleValue, year, page: 1 }));
+    dispatch(fetchMoviesRequest({ movie: movieTitle, year: movieYear, page: 1 }));
+    dispatch(changeMovieTitleRequest({ value: movieTitle }));
+
+    if (movieYear.length !== 0) {
+      dispatch(changeMovieYearRequest({ value: movieYear }));
+    }
   }
 
   return (
@@ -53,7 +67,7 @@ export const SearchBox = (props: any) => {
         id='movie-title'
         label='Enter Movie Title'
         type='text'
-        value={movieTitleValue}
+        value={movieTitle}
         onChange={onChangeMovieTitleValue}
         helperText={isError && 'This field is required'}
         error={isError}
@@ -63,12 +77,13 @@ export const SearchBox = (props: any) => {
         id='year'
         label='Enter Year'
         type='text'
-        value={year}
+        value={movieYear}
         onChange={onChangeYear}
       />
       <Button
-        variant="contained"
-        color="primary"
+        variant='contained'
+        type='submit'
+        color='primary'
         onClick={onSubmit}
       >Search</Button>
     </form>
