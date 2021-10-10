@@ -1,5 +1,5 @@
 # React web application - Movies
 
-Live Demo: [movies](https://modest-elion-81ed4b.netlify.app/)
+Live Demo: [movies](https://gifted-jang-9ca976.netlify.app/)
 
 
